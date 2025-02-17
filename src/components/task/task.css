@@ -53,7 +53,7 @@
   color: #4d4d4d;
 }
 
-.todo-list li.completed label .description {
+.todo-list li label .completed {
   color: #cdcdcd;
   text-decoration: line-through;
 }

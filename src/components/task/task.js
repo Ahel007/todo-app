@@ -1,18 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './task.css'
 
-const Task = ({label, whenCreated}) => {
-    return (
-        <div className="view">
-          <input className="toggle" type="checkbox"></input>
-          <label>
-            <span className="description">{label}</span>
-            <span className="created">{whenCreated}</span>
-          </label>
-          <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy"></button>
-        </div>
-    )
-}
+export default class Task extends Component {
+  state = {
+    condition: 'description',
+  }
 
-export default Task
+  onCompleted = () => {
+    this.setState(({ condition }) => {
+      let newCondition = 'description'
+
+      if (condition === 'description') {
+        newCondition += ' completed'
+      }
+      return { condition: newCondition }
+    })
+  }
+
+  render() {
+    const { label, whenCreated, id, itemDeleted } = this.props
+    return (
+      <div className="view">
+        <input
+          className="toggle"
+          type="checkbox"
+          id={id}
+          onClick={this.onCompleted}
+        ></input>
+        <label htmlFor={id}>
+          <span className={this.state.condition}>{label}</span>
+          <span className="created">{whenCreated}</span>
+        </label>
+        <button className="icon icon-edit"></button>
+        <button className="icon icon-destroy" onClick={itemDeleted}></button>
+      </div>
+    )
+  }
+}

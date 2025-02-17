@@ -4,9 +4,9 @@ import './new-task-form.css'
 const NewTaskForm = () => {
   return (
     <input
-      class="new-todo"
+      className="new-todo"
       placeholder="What needs to be done?"
-      autofocus
+      autoFocus
     ></input>
   )
 }
