@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
+import { formatDistanceToNow } from 'date-fns'
 import './task.css'
 
 export default class Task extends Component {
   state = {
-    condition: 'description',
+    datePass: formatDistanceToNow(this.props.date, { includeSeconds: true }),
   }
-
   onCompleted = () => {
-    this.setState(({ condition }) => {
-      let newCondition = 'description'
-
-      if (condition === 'description') {
-        newCondition += ' completed'
-      }
-      return { condition: newCondition }
-    })
+    this.props.onToggleCompleted()
   }
 
   render() {
-    const { label, whenCreated, id, itemDeleted } = this.props
+    const { label, id, itemDeleted, completed } = this.props
+    // setInterval(
+    //   this.setState({
+    //     datePass: formatDistanceToNow(this.props.date),
+    //   }),
+    //   { includeSeconds: true },
+    //   2000
+    // )
+    let condition = 'description'
+    if (completed) {
+      condition += ' completed'
+    }
     return (
       <div className="view">
         <input
@@ -26,10 +30,11 @@ export default class Task extends Component {
           type="checkbox"
           id={id}
           onClick={this.onCompleted}
+          defaultChecked={completed}
         ></input>
         <label htmlFor={id}>
-          <span className={this.state.condition}>{label}</span>
-          <span className="created">{whenCreated}</span>
+          <span className={condition}>{label}</span>
+          <span className="created">{this.state.datePass}</span>
         </label>
         <button className="icon icon-edit"></button>
         <button className="icon icon-destroy" onClick={itemDeleted}></button>

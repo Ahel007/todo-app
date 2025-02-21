@@ -8,11 +8,17 @@ export default class TaskList extends Component {
   }
 
   render() {
+    const date = this.props.date
     const elements = this.props.todos.map((item) => {
       const { id } = item
       return (
         <li key={id} className={'default'}>
-          <Task {...item} itemDeleted={() => this.props.itemDeleted(id)} />
+          <Task
+            {...item}
+            date={date}
+            itemDeleted={() => this.props.itemDeleted(id)}
+            onToggleCompleted={() => this.props.onToggleCompleted(id)}
+          />
           {this.state.condition === 'editing' ? (
             <input
               type="text"
