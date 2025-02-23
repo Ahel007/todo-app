@@ -5,16 +5,16 @@ import TaskList from '../task-list'
 import './App.css'
 
 export default class App extends Component {
+  
   maxId = 100
 
   state = {
     todoData: [
-      this.createTodoItem('Completed task', 'created 17 seconds ago'),
-      this.createTodoItem('Editing task', 'created 5 minutes ago'),
-      this.createTodoItem('Active task', 'created 5 minutes ago'),
+      this.createTodoItem('Completed task'),
+      this.createTodoItem('Editing task'),
+      this.createTodoItem('Active task'),
     ],
     filter: 'all',
-    date: new Date(),
   }
 
   createTodoItem(label) {
@@ -22,6 +22,7 @@ export default class App extends Component {
       label: label,
       completed: false,
       id: this.maxId++,
+      date: new Date(),
     }
   }
 
@@ -66,8 +67,10 @@ export default class App extends Component {
   }
   toggleProperty(arr, id, propName) {
     const idx = arr.findIndex((el) => el.id === id)
+
     const newTodoData = arr[idx]
     newTodoData[propName] = !newTodoData[propName]
+    
     return arr.with(idx, newTodoData)
   }
   onToggleCompleted = (id) => {
@@ -80,8 +83,11 @@ export default class App extends Component {
   onFilterChange = (filter) => this.setState({ filter })
 
   render() {
-    const visibleItems = this.filter(this.state.todoData, this.state.filter)
-    const itemsLeft = this.state.todoData.filter((el) => !el.completed).length
+    const { todoData, filter } = this.state
+
+    const visibleItems = this.filter(todoData, filter)
+    const itemsLeft = todoData.filter((el) => !el.completed).length
+
     return (
       <section className="todoapp">
         <header className="header">
@@ -93,11 +99,10 @@ export default class App extends Component {
             todos={visibleItems}
             itemDeleted={this.deleteItem}
             onToggleCompleted={this.onToggleCompleted}
-            date={this.state.date}
           />
           <Footer
             itemsLeft={itemsLeft}
-            filter={this.state.filter}
+            filter={filter}
             onFilterChange={this.onFilterChange}
             deleteCompleted={this.deleteCompleted}
           />
