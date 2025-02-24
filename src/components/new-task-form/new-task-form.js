@@ -1,32 +1,31 @@
-import React, { Component } from 'react'
-import './new-task-form.css'
+import React, { Component } from 'react';
+
+import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
-
   state = {
     value: '',
-  }
+  };
 
   onLabelChange = (e) => {
     this.setState({
       value: e.target.value,
-    })
-  }
+    });
+  };
 
   onEnter = (e) => {
-    const { value } = this.state
+    const { value } = this.state;
     if (value !== '' && e.key === 'Enter') {
-      this.props.onItemAdd(value)
+      this.props.onItemAdd(value);
       this.setState({
         value: '',
-      })
+      });
     }
-  }
+  };
 
   render() {
+    const { value } = this.state;
 
-    const { value } = this.state
-    
     return (
       <input
         className="new-todo"
@@ -36,6 +35,6 @@ export default class NewTaskForm extends Component {
         onKeyDown={this.onEnter}
         value={value}
       ></input>
-    )
+    );
   }
 }
